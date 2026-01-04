@@ -1,0 +1,2314 @@
+{
+  "id": "a33add02-7cec-48b4-9afc-3d2512a36691",
+  "prevId": "ad51e7b6-3c91-4e0a-a336-6c7e33c701cd",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.bible_image_variants": {
+      "name": "bible_image_variants",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "asset_type": {
+          "name": "asset_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "asset_id": {
+          "name": "asset_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shot_type": {
+          "name": "shot_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "storage_path": {
+          "name": "storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "model": {
+          "name": "model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prompt": {
+          "name": "prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'generating'"
+        },
+        "is_selected": {
+          "name": "is_selected",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "generation_order": {
+          "name": "generation_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.final_reels": {
+      "name": "final_reels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "video_storage_path": {
+          "name": "video_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "video_url": {
+          "name": "video_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duration_seconds": {
+          "name": "duration_seconds",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "file_size_bytes": {
+          "name": "file_size_bytes",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resolution": {
+          "name": "resolution",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "reel_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'assembling'"
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assembly_progress": {
+          "name": "assembly_progress",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "final_reel_project_id_idx": {
+          "name": "final_reel_project_id_idx",
+          "columns": [
+            {
+              "expression": "project_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "final_reel_status_idx": {
+          "name": "final_reel_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "final_reels_project_id_projects_id_fk": {
+          "name": "final_reels_project_id_projects_id_fk",
+          "tableFrom": "final_reels",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "tableTo": "projects",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.projects": {
+      "name": "projects",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "screenplay_filename": {
+          "name": "screenplay_filename",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "screenplay_storage_path": {
+          "name": "screenplay_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "visual_style": {
+          "name": "visual_style",
+          "type": "visual_style",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "style_locked": {
+          "name": "style_locked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "status": {
+          "name": "status",
+          "type": "project_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'parsing'"
+        },
+        "n8n_parse_job_id": {
+          "name": "n8n_parse_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_duration_seconds": {
+          "name": "total_duration_seconds",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scene_order": {
+          "name": "scene_order",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "project_status_idx": {
+          "name": "project_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "project_created_at_idx": {
+          "name": "project_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.scenes": {
+      "name": "scenes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scene_number": {
+          "name": "scene_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slugline": {
+          "name": "slugline",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action_text": {
+          "name": "action_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "characters": {
+          "name": "characters",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "validation_status": {
+          "name": "validation_status",
+          "type": "scene_validation_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "user_edits": {
+          "name": "user_edits",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_scene_data": {
+          "name": "raw_scene_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_data": {
+          "name": "full_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_image_id": {
+          "name": "approved_image_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_image_url": {
+          "name": "approved_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "scene_project_id_idx": {
+          "name": "scene_project_id_idx",
+          "columns": [
+            {
+              "expression": "project_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_validation_status_idx": {
+          "name": "scene_validation_status_idx",
+          "columns": [
+            {
+              "expression": "validation_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_number_idx": {
+          "name": "scene_number_idx",
+          "columns": [
+            {
+              "expression": "scene_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "scenes_project_id_projects_id_fk": {
+          "name": "scenes_project_id_projects_id_fk",
+          "tableFrom": "scenes",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "tableTo": "projects",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.scene_images": {
+      "name": "scene_images",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "scene_id": {
+          "name": "scene_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "generation_method": {
+          "name": "generation_method",
+          "type": "image_generation_method",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_storage_path": {
+          "name": "image_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'generating'"
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "generation_prompt": {
+          "name": "generation_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refinement_feedback": {
+          "name": "refinement_feedback",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refinement_iteration": {
+          "name": "refinement_iteration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "parent_image_id": {
+          "name": "parent_image_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "generation_phase": {
+          "name": "generation_phase",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "scene_image_scene_id_idx": {
+          "name": "scene_image_scene_id_idx",
+          "columns": [
+            {
+              "expression": "scene_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_image_status_idx": {
+          "name": "scene_image_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_image_approved_at_idx": {
+          "name": "scene_image_approved_at_idx",
+          "columns": [
+            {
+              "expression": "approved_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "scene_images_scene_id_scenes_id_fk": {
+          "name": "scene_images_scene_id_scenes_id_fk",
+          "tableFrom": "scene_images",
+          "columnsFrom": [
+            "scene_id"
+          ],
+          "tableTo": "scenes",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.scene_image_variants": {
+      "name": "scene_image_variants",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "scene_id": {
+          "name": "scene_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "storage_path": {
+          "name": "storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "model": {
+          "name": "model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prompt": {
+          "name": "prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "injected_characters": {
+          "name": "injected_characters",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "injected_locations": {
+          "name": "injected_locations",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "injected_props": {
+          "name": "injected_props",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'generating'"
+        },
+        "is_selected": {
+          "name": "is_selected",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "parent_variant_id": {
+          "name": "parent_variant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "generation_order": {
+          "name": "generation_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "scene_image_variant_scene_id_idx": {
+          "name": "scene_image_variant_scene_id_idx",
+          "columns": [
+            {
+              "expression": "scene_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_image_variant_status_idx": {
+          "name": "scene_image_variant_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_image_variant_is_selected_idx": {
+          "name": "scene_image_variant_is_selected_idx",
+          "columns": [
+            {
+              "expression": "is_selected",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "scene_image_variants_scene_id_scenes_id_fk": {
+          "name": "scene_image_variants_scene_id_scenes_id_fk",
+          "tableFrom": "scene_image_variants",
+          "columnsFrom": [
+            "scene_id"
+          ],
+          "tableTo": "scenes",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.scene_videos": {
+      "name": "scene_videos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "scene_id": {
+          "name": "scene_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_variant_id": {
+          "name": "source_variant_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "video_storage_path": {
+          "name": "video_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "video_url": {
+          "name": "video_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duration_seconds": {
+          "name": "duration_seconds",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'generating'"
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "scene_video_scene_id_idx": {
+          "name": "scene_video_scene_id_idx",
+          "columns": [
+            {
+              "expression": "scene_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_video_status_idx": {
+          "name": "scene_video_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_video_source_variant_id_idx": {
+          "name": "scene_video_source_variant_id_idx",
+          "columns": [
+            {
+              "expression": "source_variant_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "scene_videos_scene_id_scenes_id_fk": {
+          "name": "scene_videos_scene_id_scenes_id_fk",
+          "tableFrom": "scene_videos",
+          "columnsFrom": [
+            "scene_id"
+          ],
+          "tableTo": "scenes",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        },
+        "scene_videos_source_variant_id_scene_image_variants_id_fk": {
+          "name": "scene_videos_source_variant_id_scene_image_variants_id_fk",
+          "tableFrom": "scene_videos",
+          "columnsFrom": [
+            "source_variant_id"
+          ],
+          "tableTo": "scene_image_variants",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.scene_audio": {
+      "name": "scene_audio",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "scene_id": {
+          "name": "scene_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "audio_type": {
+          "name": "audio_type",
+          "type": "audio_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "audio_storage_path": {
+          "name": "audio_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "audio_url": {
+          "name": "audio_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duration_seconds": {
+          "name": "duration_seconds",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'generating'"
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "genre_preset": {
+          "name": "genre_preset",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "scene_audio_scene_id_idx": {
+          "name": "scene_audio_scene_id_idx",
+          "columns": [
+            {
+              "expression": "scene_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_audio_type_idx": {
+          "name": "scene_audio_type_idx",
+          "columns": [
+            {
+              "expression": "audio_type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_audio_status_idx": {
+          "name": "scene_audio_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "scene_audio_scene_id_scenes_id_fk": {
+          "name": "scene_audio_scene_id_scenes_id_fk",
+          "tableFrom": "scene_audio",
+          "columnsFrom": [
+            "scene_id"
+          ],
+          "tableTo": "scenes",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.share_links": {
+      "name": "share_links",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "share_id": {
+          "name": "share_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "view_count": {
+          "name": "view_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "share_link_share_id_idx": {
+          "name": "share_link_share_id_idx",
+          "columns": [
+            {
+              "expression": "share_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "share_link_project_id_idx": {
+          "name": "share_link_project_id_idx",
+          "columns": [
+            {
+              "expression": "project_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "share_link_is_active_idx": {
+          "name": "share_link_is_active_idx",
+          "columns": [
+            {
+              "expression": "is_active",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "share_links_project_id_projects_id_fk": {
+          "name": "share_links_project_id_projects_id_fk",
+          "tableFrom": "share_links",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "tableTo": "projects",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "share_links_share_id_unique": {
+          "name": "share_links_share_id_unique",
+          "columns": [
+            "share_id"
+          ],
+          "nullsNotDistinct": false
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.project_characters": {
+      "name": "project_characters",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "character_role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'supporting'"
+        },
+        "visual_dna": {
+          "name": "visual_dna",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "backstory": {
+          "name": "backstory",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "portrait_prompt": {
+          "name": "portrait_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "portrait_image_url": {
+          "name": "portrait_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "portrait_storage_path": {
+          "name": "portrait_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "portrait_status": {
+          "name": "portrait_status",
+          "type": "bible_asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "portrait_n8n_job_id": {
+          "name": "portrait_n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "three_quarter_prompt": {
+          "name": "three_quarter_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "three_quarter_image_url": {
+          "name": "three_quarter_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "three_quarter_storage_path": {
+          "name": "three_quarter_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "three_quarter_status": {
+          "name": "three_quarter_status",
+          "type": "bible_asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "three_quarter_n8n_job_id": {
+          "name": "three_quarter_n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_body_prompt": {
+          "name": "full_body_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_body_image_url": {
+          "name": "full_body_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_body_storage_path": {
+          "name": "full_body_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_body_status": {
+          "name": "full_body_status",
+          "type": "bible_asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "full_body_n8n_job_id": {
+          "name": "full_body_n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "selected_model": {
+          "name": "selected_model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'seedream-4.5-text-to-image'"
+        },
+        "upload_source": {
+          "name": "upload_source",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_image_url": {
+          "name": "approved_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_image_storage_path": {
+          "name": "approved_image_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_status": {
+          "name": "image_status",
+          "type": "bible_asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "generation_prompt": {
+          "name": "generation_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_data": {
+          "name": "raw_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "character_project_id_idx": {
+          "name": "character_project_id_idx",
+          "columns": [
+            {
+              "expression": "project_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "character_image_status_idx": {
+          "name": "character_image_status_idx",
+          "columns": [
+            {
+              "expression": "image_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "character_role_idx": {
+          "name": "character_role_idx",
+          "columns": [
+            {
+              "expression": "role",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "character_portrait_status_idx": {
+          "name": "character_portrait_status_idx",
+          "columns": [
+            {
+              "expression": "portrait_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "character_three_quarter_status_idx": {
+          "name": "character_three_quarter_status_idx",
+          "columns": [
+            {
+              "expression": "three_quarter_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "character_full_body_status_idx": {
+          "name": "character_full_body_status_idx",
+          "columns": [
+            {
+              "expression": "full_body_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "project_characters_project_id_projects_id_fk": {
+          "name": "project_characters_project_id_projects_id_fk",
+          "tableFrom": "project_characters",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "tableTo": "projects",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.project_locations": {
+      "name": "project_locations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "location_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'interior'"
+        },
+        "visual_description": {
+          "name": "visual_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time_variants": {
+          "name": "time_variants",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_image_url": {
+          "name": "approved_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_image_storage_path": {
+          "name": "approved_image_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_status": {
+          "name": "image_status",
+          "type": "bible_asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "generation_prompt": {
+          "name": "generation_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "selected_model": {
+          "name": "selected_model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'seedream-4.5-text-to-image'"
+        },
+        "is_uploaded": {
+          "name": "is_uploaded",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_data": {
+          "name": "raw_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "location_project_id_idx": {
+          "name": "location_project_id_idx",
+          "columns": [
+            {
+              "expression": "project_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "location_image_status_idx": {
+          "name": "location_image_status_idx",
+          "columns": [
+            {
+              "expression": "image_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "location_type_idx": {
+          "name": "location_type_idx",
+          "columns": [
+            {
+              "expression": "type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "project_locations_project_id_projects_id_fk": {
+          "name": "project_locations_project_id_projects_id_fk",
+          "tableFrom": "project_locations",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "tableTo": "projects",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.project_props": {
+      "name": "project_props",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "importance": {
+          "name": "importance",
+          "type": "prop_importance",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'medium'"
+        },
+        "generation_method": {
+          "name": "generation_method",
+          "type": "prop_generation_method",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'GENERATE'"
+        },
+        "scale_reference": {
+          "name": "scale_reference",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "visual_description": {
+          "name": "visual_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "approved_image_url": {
+          "name": "approved_image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_image_storage_path": {
+          "name": "approved_image_storage_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_status": {
+          "name": "image_status",
+          "type": "bible_asset_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "generation_prompt": {
+          "name": "generation_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "n8n_job_id": {
+          "name": "n8n_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "selected_model": {
+          "name": "selected_model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'seedream-4.5-text-to-image'"
+        },
+        "is_uploaded": {
+          "name": "is_uploaded",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_data": {
+          "name": "raw_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "prop_project_id_idx": {
+          "name": "prop_project_id_idx",
+          "columns": [
+            {
+              "expression": "project_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "prop_image_status_idx": {
+          "name": "prop_image_status_idx",
+          "columns": [
+            {
+              "expression": "image_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "prop_importance_idx": {
+          "name": "prop_importance_idx",
+          "columns": [
+            {
+              "expression": "importance",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "project_props_project_id_projects_id_fk": {
+          "name": "project_props_project_id_projects_id_fk",
+          "tableFrom": "project_props",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "tableTo": "projects",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.scene_shots": {
+      "name": "scene_shots",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "scene_id": {
+          "name": "scene_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shot_number": {
+          "name": "shot_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration_estimate": {
+          "name": "duration_estimate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shot_description": {
+          "name": "shot_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shot_type": {
+          "name": "shot_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "camera_angle": {
+          "name": "camera_angle",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "camera_movement": {
+          "name": "camera_movement",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_generation_prompt": {
+          "name": "image_generation_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "full_data": {
+          "name": "full_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "scene_shot_scene_id_idx": {
+          "name": "scene_shot_scene_id_idx",
+          "columns": [
+            {
+              "expression": "scene_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        },
+        "scene_shot_number_idx": {
+          "name": "scene_shot_number_idx",
+          "columns": [
+            {
+              "expression": "shot_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "with": {},
+          "method": "btree",
+          "concurrently": false
+        }
+      },
+      "foreignKeys": {
+        "scene_shots_scene_id_scenes_id_fk": {
+          "name": "scene_shots_scene_id_scenes_id_fk",
+          "tableFrom": "scene_shots",
+          "columnsFrom": [
+            "scene_id"
+          ],
+          "tableTo": "scenes",
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.asset_status": {
+      "name": "asset_status",
+      "schema": "public",
+      "values": [
+        "generating",
+        "ready",
+        "approved",
+        "failed"
+      ]
+    },
+    "public.audio_type": {
+      "name": "audio_type",
+      "schema": "public",
+      "values": [
+        "voiceover",
+        "sfx",
+        "music"
+      ]
+    },
+    "public.bible_asset_status": {
+      "name": "bible_asset_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "generating",
+        "ready",
+        "approved",
+        "failed"
+      ]
+    },
+    "public.character_role": {
+      "name": "character_role",
+      "schema": "public",
+      "values": [
+        "lead",
+        "supporting",
+        "background"
+      ]
+    },
+    "public.image_generation_method": {
+      "name": "image_generation_method",
+      "schema": "public",
+      "values": [
+        "auto_generate",
+        "upload"
+      ]
+    },
+    "public.location_type": {
+      "name": "location_type",
+      "schema": "public",
+      "values": [
+        "interior",
+        "exterior"
+      ]
+    },
+    "public.project_status": {
+      "name": "project_status",
+      "schema": "public",
+      "values": [
+        "parsing",
+        "bible_review",
+        "scene_validation",
+        "asset_generation",
+        "timeline_review",
+        "final_review",
+        "assembling",
+        "completed",
+        "failed"
+      ]
+    },
+    "public.prop_generation_method": {
+      "name": "prop_generation_method",
+      "schema": "public",
+      "values": [
+        "GENERATE",
+        "DESCRIBE"
+      ]
+    },
+    "public.prop_importance": {
+      "name": "prop_importance",
+      "schema": "public",
+      "values": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "public.reel_status": {
+      "name": "reel_status",
+      "schema": "public",
+      "values": [
+        "assembling",
+        "ready",
+        "failed"
+      ]
+    },
+    "public.scene_validation_status": {
+      "name": "scene_validation_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "public.visual_style": {
+      "name": "visual_style",
+      "schema": "public",
+      "values": [
+        "wes-anderson",
+        "classic-noir",
+        "70s-crime-drama"
+      ]
+    }
+  },
+  "schemas": {},
+  "views": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

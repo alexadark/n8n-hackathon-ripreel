@@ -1,0 +1,1 @@
+ALTER TABLE "scene_image_variants" ADD COLUMN "parent_variant_id" uuid;
