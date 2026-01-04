@@ -2,7 +2,7 @@
 
 **AI-Powered Film Production Tool** - Transform screenplays into professional video pitch reels in under 1 hour (vs 2 weeks + $5,000 traditional cost).
 
-Built for the **n8n x Anthropic Hackathon 2024**.
+Built for the **n8n Hackathon 2025 in the Early AI Dopters community**.
 
 ---
 
